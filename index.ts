@@ -23,7 +23,6 @@ function PickupItem(owner: Unit) {
 		return
 	}
 	owner.PickupItem(physicalItem)
-	Sleeper.Sleep(33, owner.Index)
 	Isdropped = false
 }
 
