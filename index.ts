@@ -31,8 +31,6 @@ EventsSDK.on("Tick", dt => {
 	if (GameRules === undefined || !GameState.IsConnected)
 		return
 
-	const time = ((GameState.GetLatency() + dt) * 1000) + 90
-
 	for (const ability of Abilities) {
 
 		const owner = ability.Owner
@@ -46,7 +44,7 @@ EventsSDK.on("Tick", dt => {
 				ability.UseAbility()
 			} else if (ultimate_scepter?.IsDroppable && ability.CurrentCharges >= 2) {
 				owner.DropItem(ultimate_scepter, owner.Position)
-				Sleeper.Sleep(time, owner.Index)
+				Sleeper.Sleep(GameState.Ping, owner.Index)
 				Isdropped = true
 				continue
 			}
