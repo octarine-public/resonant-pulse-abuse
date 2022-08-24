@@ -8,10 +8,6 @@ const entries = Menu.AddEntry("Utility")
 const menu = entries.AddNode("Resonant pulse abuse", ImagePath, "!!! Use own risk and lucky !!!\nFor abuse need ultimate scepter", 0)
 const keyBind = menu.AddKeybind("Key")
 
-Menu.Localization.AddLocalizationUnit("russian", new Map([
-	["!!! Use own risk and lucky !!!\nFor abuse need ultimate scepter", "Используйте на свой страх, риск и удачу!\nДля абуза требуется аганим и удержживать бинд"],
-]))
-
 const PhysicalItems = EntityManager.GetEntitiesByClass(PhysicalItem)
 const Abilities = EntityManager.GetEntitiesByClass(void_spirit_resonant_pulse)
 
