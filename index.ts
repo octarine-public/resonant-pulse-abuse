@@ -1,4 +1,4 @@
-import { EntityManager, EventsSDK, GameRules, GameSleeper, GameState, item_ultimate_scepter, Menu, PhysicalItem, Unit, void_spirit_resonant_pulse } from "./wrapper/Imports"
+import { EntityManager, EventsSDK, GameRules, GameSleeper, GameState, item_ultimate_scepter, Menu, PhysicalItem, Unit, void_spirit_resonant_pulse } from "github.com/octarine-public/wrapper/wrapper/Imports"
 
 let Isdropped = false
 const Sleeper = new GameSleeper()
