@@ -1,12 +1,27 @@
-import { EntityManager, EventsSDK, GameRules, GameSleeper, GameState, item_ultimate_scepter, Menu, PhysicalItem, Unit, void_spirit_resonant_pulse } from "github.com/octarine-public/wrapper/index"
-import "./Translate"
+import {
+	EntityManager,
+	EventsSDK,
+	GameRules,
+	GameSleeper,
+	GameState,
+	item_ultimate_scepter,
+	Menu,
+	PhysicalItem,
+	Unit,
+	void_spirit_resonant_pulse
+} from "github.com/octarine-public/wrapper/index"
 
 let Isdropped = false
 const Sleeper = new GameSleeper()
 const ImagePath = "panorama/images/spellicons/void_spirit_resonant_pulse_png.vtex_c"
 
 const entries = Menu.AddEntry("Utility")
-const menu = entries.AddNode("Resonant pulse abuse", ImagePath, "!!! Use own risk and lucky !!!\nFor abuse need ultimate scepter", 0)
+const menu = entries.AddNode(
+	"Resonant pulse abuse",
+	ImagePath,
+	"!!! Use own risk and lucky !!!\nFor abuse need ultimate scepter",
+	0
+)
 const keyBind = menu.AddKeybind("Key")
 
 const PhysicalItems = EntityManager.GetEntitiesByClass(PhysicalItem)
@@ -23,24 +38,31 @@ function PickupItem(owner: Unit) {
 	Isdropped = false
 }
 
-EventsSDK.on("Tick", dt => {
-
-	if (GameRules === undefined || !GameState.IsConnected)
+EventsSDK.on("Tick", () => {
+	if (GameRules === undefined || !GameState.IsConnected) {
 		return
+	}
 
 	for (const ability of Abilities) {
-
 		const owner = ability.Owner
-		if (owner === undefined || Sleeper.Sleeping(owner.Index) || owner.IsIllusion || !owner.IsAlive || owner.IsSilenced || owner.IsStunned)
+		if (
+			owner === undefined ||
+			Sleeper.Sleeping(owner.Index) ||
+			owner.IsIllusion ||
+			!owner.IsAlive ||
+			owner.IsSilenced ||
+			owner.IsStunned
+		) {
 			continue
+		}
 
-		const ultimate_scepter = owner.GetItemByClass(item_ultimate_scepter)
+		const ultimateScepter = owner.GetItemByClass(item_ultimate_scepter)
 
-		if (keyBind.is_pressed && ability.Cooldown === 0 && ability.ManaCost <= owner.Mana) {
+		if (keyBind.isPressed && ability.Cooldown === 0 && ability.ManaCost <= owner.Mana) {
 			if (Isdropped) {
 				ability.UseAbility()
-			} else if (ultimate_scepter?.IsDroppable && ability.CurrentCharges >= 2) {
-				owner.DropItem(ultimate_scepter, owner.Position)
+			} else if (ultimateScepter?.IsDroppable && ability.CurrentCharges >= 2) {
+				owner.DropItem(ultimateScepter, owner.Position)
 				Sleeper.Sleep(GameState.Ping, owner.Index)
 				Isdropped = true
 				continue
