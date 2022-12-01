@@ -28,9 +28,7 @@ const PhysicalItems = EntityManager.GetEntitiesByClass(PhysicalItem)
 const Abilities = EntityManager.GetEntitiesByClass(void_spirit_resonant_pulse)
 
 function PickupItem(owner: Unit) {
-	const physicalItem = PhysicalItems.find(
-		x => x.Item instanceof item_ultimate_scepter && owner.Distance2D(x) <= 200
-	)
+	const physicalItem = PhysicalItems.find(x => x.Item instanceof item_ultimate_scepter && owner.Distance2D(x) <= 200)
 	if (physicalItem === undefined) {
 		Isdropped = false
 		Sleeper.ResetKey(owner.Handle)
@@ -41,7 +39,9 @@ function PickupItem(owner: Unit) {
 }
 
 EventsSDK.on("Tick", () => {
-	if (GameRules === undefined || !GameState.IsConnected) return
+	if (GameRules === undefined || !GameState.IsConnected) {
+		return
+	}
 
 	for (const ability of Abilities) {
 		const owner = ability.Owner
@@ -52,8 +52,9 @@ EventsSDK.on("Tick", () => {
 			!owner.IsAlive ||
 			owner.IsSilenced ||
 			owner.IsStunned
-		)
+		) {
 			continue
+		}
 
 		const ultimateScepter = owner.GetItemByClass(item_ultimate_scepter)
 
